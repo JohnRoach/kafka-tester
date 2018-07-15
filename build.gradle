@@ -3,6 +3,9 @@ plugins {
     id "com.google.cloud.tools.minikube" version "1.0.0-alpha.2"
 }
 
+
+apply plugin: 'idea'
+
 golang {
     packagePath = 'github.com/johnroach/kafkaTester'
     goVersion = '1.10.3'
@@ -17,3 +20,13 @@ dependencies {
         build(['name':'github.com/spf13/viper'])
     }
 }
+
+task "deployKafkaToKube"(type: Exec){
+    commandLine 'kubectl', 'apply', '-f', 'test-utils/test-deployment.yml'
+}
+
+task "waitForKafkaStatus"(type: Exec){
+    commandLine './test-utils/scripts/waitForKafkaStatus.sh'
+}
+
+deployKafkaToKube.finalizedBy waitForKafkaStatus
