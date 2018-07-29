@@ -70,6 +70,7 @@ func initConfig() {
 
 		// Search config in home directory with name ".kafkaTester" (without extension).
 		viper.AddConfigPath(home)
+		viper.AddConfigPath(".")
 		viper.SetConfigName(".kafkaTester")
 	}
 
@@ -92,8 +93,5 @@ var versionCmd = &cobra.Command{
 
 // printVersion prints out version which is defined globally
 func printVersion() string {
-	if Debug {
-		fmt.Println("Getting the app version")
-	}
 	return AppVersion
 }
