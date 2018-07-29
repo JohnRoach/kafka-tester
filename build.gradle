@@ -21,6 +21,10 @@ dependencies {
     }
 }
 
+minikubeStart {
+  flags = ["--vm-driver=none", "--kubernetes-version=v1.10.0", "--bootstrapper=localkube"]
+}
+
 task "deployKafkaToKube"(type: Exec){
     commandLine 'kubectl', 'apply', '-f', 'test-utils/test-deployment.yml'
 }
